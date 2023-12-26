@@ -1,5 +1,5 @@
 -- создание необходимых в дальнейшем таблиц
-create table districts
+create table if not exists districts
 (
     id         bigint primary key generated always as identity,
     r_country  varchar(3) not null,
@@ -7,7 +7,7 @@ create table districts
     unique (r_district, r_country)
 );
 
-create table cities
+create table if not exists cities
 (
     id         bigint primary key generated always as identity,
     r_district bigint references districts not null,
@@ -15,21 +15,22 @@ create table cities
     unique (r_city, r_district)
 );
 
-create table nationalities
+create table if not exists nationalities
 (
     id             bigint primary key generated always as identity,
     nationality    varchar not null unique,
     nationality_en varchar not null unique
 );
 
-create table human_nationalities
+create table if not exists human_nationalities
 (
     id             bigint primary key generated always as identity,
     nationality_id bigint references nationalities not null,
-    human_id       varchar references human
+    human_id       varchar references human,
+    unique (nationality_id, human_id)
 );
 
-create table human_diseases
+create table if not exists human_diseases
 (
     id       bigint primary key generated always as identity,
     human_id varchar not null references human,

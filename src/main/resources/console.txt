@@ -1,0 +1,209 @@
+-- select distinct r_country, r_district, r_city from brain.human;
+-- update table_name
+-- set column_2 = null
+-- from human
+-- where column_2 = r_country;
+-- select distinct h.r_city, c.column_1
+-- from human as h
+--          join table_name c on h.r_country = c.column_2;
+
+select m.position,
+       m.ref_nucl,
+       m.mutation,
+       m.type,
+       m.gene,
+       m.human
+from mutation as m
+where
+--     human in
+--       ('D_Nov_002p_S1', 'D_Nov_004p_S25',
+--                 'D_Nov_005p_S34') and
+    gene = 'SLC6A2'
+  and position = 55731835;
+
+alter table testresponsetype
+    add column test integer;
+update testresponsetype
+set test = t.test
+from test as t
+where testresponsetype = t.name;
+
+select count(distinct (gene, chromosome, position, ref_nucl, mutation, type))
+from mutation;
+create table genes
+(
+    id         bigint primary key generated always as identity,
+    chromosome varchar        not null,
+    gene_name  varchar unique not null
+);
+
+select h.age,
+       h.sex,
+       c.r_city,
+       h.ethnos,
+--        h.human,
+       case
+           when h.human in (select human_id from human_diseases where disease = 'депрессия') then true
+           else false end as is_depressed,
+       case
+           when exists(select 1
+                       from human_mutations
+                                join mutation_snp ms on human_mutations.snp_id = ms.id
+                       where ms.position = 113965735
+                         and ref_nucl = 'G'
+                         and mutation = 'C'
+                         and human = h.human) then true
+           else false end as is_rs6318,
+       case
+           when exists(select 1
+                       from human_mutations
+                                join mutation_snp ms on human_mutations.snp_id = ms.id
+                       where ms.position = 55731835
+                         and ms.ref_nucl = 'G'
+                         and ms.mutation = 'A'
+                         and human_mutations.human = h.human) then true
+           else false end as is_rs5569,
+       case
+           when exists(select 1 from human_mutations hm where h.human = hm.human and hm.snp_id = 2919) then true
+           else false end as is_2919,
+       case
+           when exists(select 1 from human_mutations hm where h.human = hm.human and hm.snp_id = 15377) then true
+           else false end as is_15377,
+       case
+           when exists(select 1 from human_mutations hm where h.human = hm.human and hm.snp_id = 9698) then true
+           else false end as is_9698,
+       case
+           when exists(select 1 from human_mutations hm where h.human = hm.human and hm.snp_id = 12845) then true
+           else false end as is_12845,
+       case
+           when exists(select 1 from human_mutations hm where h.human = hm.human and hm.snp_id = 11366) then true
+           else false end as is_11366,
+       case
+           when exists(select 1 from human_mutations hm where h.human = hm.human and hm.snp_id = 16987) then true
+           else false end as is_16987,
+       case
+           when exists(select 1 from human_mutations hm where h.human = hm.human and hm.snp_id = 12170) then true
+           else false end as is_12170,
+       -- '2919', '15377', '9698', '12845', '11366', '16987', '12170'
+       case
+           when exists(select 1
+                       from human_mutations
+                                join mutation_snp ms on human_mutations.snp_id = ms.id
+                       where ms.id = 2919) then true
+           else false end as is_rs4680,
+       case
+           when exists(select 1
+                       from human_mutations
+                                join mutation_snp ms on human_mutations.snp_id = ms.id
+                       where ms.position = 27679916
+                         and ref_nucl = 'C'
+                         and mutation = 'T'
+                         and human = h.human) then true
+           else false end as is_rs6265,
+       (select n.nationality
+        from human_nationalities hn
+                 join nationalities n on n.id = hn.nationality_id
+        where hn.human_id = h.human
+        limit 1)          as nationality
+from human h
+         join cities c on h.city = c.id
+
+where h.city is not null
+  and h.ethnos is not null
+  and sex != 0
+  and age != 0;
+
+select snp_id, count(*)
+FROM human_mutations
+where human not in (select hd.human_id from human_diseases hd)
+  and snp_id = 7358
+GROUP BY snp_id;
+
+select gene_name, s.position, s.mutation, s.ref_nucl, s.type, s.id
+from mutation_snp s
+         join genes g on s.gene_id = g.id
+where s.id in (3867, 6741, 2919, 6538, 13596, 3820, 5918, 2015, 12170, 11856, 34, 15787, 10698);
+
+select nationality, count(*)
+from human_mutations hm
+         join mutation_snp ms on ms.id = hm.snp_id
+         join human h on h.human = hm.human
+         join human_nationalities hn on h.human = hn.human_id
+join nationalities n on hn.nationality_id = n.id
+where ms.id = 3867
+group by nationality;
+
+-- русский, якут, украинец, остальные большая часть по-чуть-чуть: 2919, 3867, 6741, 2015;
+-- русский, тувинец, якут, остальные большая часть по-чуть-чуть: 6538, 13596, 3820, 11856 (вместо якута украинец), 10698;
+-- русский, украинец, остальные большая часть по-чуть-чуть: 3867, 5918, 12170, 34 (буряты и евреи после украинцев), 15787(якуты после украинцев);
+
+
+-- Novosibirsk: 3867, 5918, 12170, 34 (еще Байкал), 15787 (еще Байкал и Хандыга)
+-- Novosibirsk, Yakutsk: 6741, 2015, 2919 (еще Хандыга), 6538 (еще в Кызыле)
+-- Все: 13596, 3820, 11856 (нет Якутска только), 10698, 6538
+
+
+select c.r_city, count(*)
+from human_mutations hm
+         join mutation_snp ms on ms.id = hm.snp_id
+         join human h on h.human = hm.human
+         join cities c on h.city = c.id
+         join human_diseases hd on h.human = hd.human_id
+where ms.id = 2015
+group by r_city;
+
+select c.r_city, count(*)
+from human h
+         join cities c on h.city = c.id
+group by r_city;
+-- select count(1)
+-- from human_mutations
+
+
+select snp_id, g.gene_name, count(*) as count
+FROM human_mutations
+         join mutation_snp ms on human_mutations.snp_id = ms.id
+         join genes g on ms.gene_id = g.id
+where human not in (select hd.human_id from human_diseases hd)
+GROUP BY snp_id, g.gene_name
+order by count desc;
+
+select snp_id, human
+from human_mutations
+where snp_id in (select snp_id
+                 from human_mutations hm
+                          join human_diseases hd on hd.human_id = hm.human
+                          join human h on hd.human_id = h.human
+                 group by snp_id
+                 having count(snp_id) > 57 / 2);
+select *
+from human
+         join human_mutations hm on human.human = hm.human;
+select human, snp_id
+from human_mutations
+
+
+
+-- GRIN2A chr19
+-- 54721320
+-- position > 54703687
+
+-- HAVING COUNT( human) = 3;
+
+-- WITH drky_count
+--          AS (SELECT m.position,
+-- --                     m.ref_nucl,
+-- --                     m.mutation,
+-- --                     m.type,
+-- --                     m.human,
+-- --                     COUNT(m.human) OVER (PARTITION BY m.position, m.ref_nucl, m.mutation, m.type)
+-- --                         AS DRKY_COUNT
+-- --              FROM mutation as m
+-- --              WHERE human in
+-- --                    ('D_Nov_002p_S1', 'D_Nov_004p_S25',
+-- --                     'D_Nov_005p_S34', 'D_Nov_006p_S80', 'Co_y3_duo_L4')
+-- --                and gene = 'COMT')
+--
+-- SELECT *
+-- FROM drky_count
+-- WHERE DRKY_COUNT = (SELECT MAX(DRKY_COUNT) FROM drky_count);
