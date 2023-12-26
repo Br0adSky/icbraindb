@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/icbrain?currentSchema=brain
+    username: savobraindb_admin
+    password: savobraindb_admin
+  flyway:
+    baseline-on-migrate: true
+  #    default-schema: brain
+  jpa:
+    hibernate:
+      ddl-auto: validate
+#    properties:
+#      hibernate:
+#        default_schema: brain
+
