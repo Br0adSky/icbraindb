@@ -35,7 +35,7 @@ object HumanSpecification {
     val predicate = when {
       age.min == null -> builder.lessThan(ageField, age.max!!.toInt())
       age.max == null -> builder.greaterThan(ageField, age.min.toInt())
-      else -> builder.between(root.get(Human_.age), age.min.toInt(), age.max.toInt())
+      else -> builder.between(ageField, age.min.toInt(), age.max.toInt())
     }
 
     CommonSpecification.includeNull(builder, ageField, age, predicate)
@@ -87,27 +87,25 @@ object HumanSpecification {
     CommonSpecification.exists(builder, summarySQ, hasSummaries)
   }
 
-  fun nationalities(stringFilters: ListOfExactFilters): Specification<Human> = Specification { root, query, builder ->
+  fun nationalities(exactNationalities: ListOfExactFilters): Specification<Human> = Specification { root, query, builder ->
     val humanNationalitySQ = query.subquery(String::class.java)
     val humanNationalityRoot = humanNationalitySQ.from(Human::class.java)
 
     val nationalityQuery = humanNationalitySQ.subquery(Nationality::class.java)
     val nationalityRoot = nationalityQuery.from(Nationality::class.java)
 
-    val nationalityFilters = stringFilters.value.map {
-      CommonSpecification.equal(builder, nationalityRoot.get(Nationality_.nationality), it)
-    }
-    val nationalityPredicate = nationalityFilters.reduce { acc, predicate -> builder.or(acc, predicate) }
+    val nationalityPredicate = builder.`in`(nationalityRoot.get(Nationality_.nationality))
+    exactNationalities.value.forEach { nationalityPredicate.value(it.value) }
     nationalityQuery.select(nationalityRoot).where(nationalityPredicate)
 
     val nationalityJoin = humanNationalityRoot.join(Human_.nationalities)
     val nationalityIn = builder.`in`(nationalityJoin)
     nationalityIn.value(nationalityQuery)
-    CommonSpecification.includeNull(builder, nationalityJoin, stringFilters, nationalityIn)
+    CommonSpecification.includeNull(builder, nationalityJoin, exactNationalities, nationalityIn)
     humanNationalitySQ.select(humanNationalityRoot.get(Human_.id))
         .where(nationalityIn)
         .groupBy(humanNationalityRoot.get(Human_.id))
-        .having(builder.equal(builder.count(humanNationalityRoot), stringFilters.value.size))
+        .having(builder.equal(builder.count(humanNationalityRoot), exactNationalities.value.size))
 
     builder.`in`(root.get(Human_.id)).value(humanNationalitySQ)
   }

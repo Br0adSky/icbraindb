@@ -1,10 +1,12 @@
 package ru.cytogen.icbraindb.filter
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import jakarta.validation.Valid
 import ru.cytogen.icbraindb.annotation.TableFilter
 import ru.cytogen.icbraindb.annotation.TableFilterType
 import ru.cytogen.icbraindb.filter.types.*
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 class HumanFilter(
     @TableFilter(type = TableFilterType.STRING, "Идентификатор")
     @field:Valid

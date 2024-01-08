@@ -1,7 +1,6 @@
 package ru.cytogen.icbraindb.service
 
 import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import ru.cytogen.icbraindb.dto.HumanDto
@@ -14,7 +13,6 @@ import ru.cytogen.icbraindb.dto.response.Response
 import ru.cytogen.icbraindb.filter.HumanFilter
 import ru.cytogen.icbraindb.filter.service.FilterParser
 import ru.cytogen.icbraindb.model.Human
-import ru.cytogen.icbraindb.model.Nationality
 import ru.cytogen.icbraindb.repository.HumanRepository
 
 typealias HumanSort = ru.cytogen.icbraindb.dto.common.Sort<HumanSortColumn>
@@ -28,8 +26,8 @@ class HumanService(
     val sort = request.sort ?: HumanSort(HumanSortColumn.ID, SortType.ASC)
     val data = repo.findAll(getSpecification(request),
         PageRequest.of(page.number, page.size)
-            .withSort(convertSort(sort))
-    ).map(::convertHuman)
+            .withSort(SortConverter.convert(sort))
+    ).map(HumanConverter::convert)
 
     return Response(
         data.toList(),
@@ -38,14 +36,6 @@ class HumanService(
         sort,
         FilterParser.getFilterCache(HumanFilter::class)
     )
-  }
-
-  private fun convertSort(sort: HumanSort): Sort {
-    val base = sort.column.getSort()
-    return when (sort.type) {
-      SortType.ASC -> base.ascending()
-      SortType.DESC -> base.descending()
-    }
   }
 
   private fun getSpecification(request: Request<HumanFilter, HumanSortColumn>): Specification<Human> {
@@ -66,21 +56,6 @@ class HumanService(
   }
 
   fun getAll(): Iterable<HumanDto> {
-    return repo.findAll().map(::convertHuman)
-  }
-
-  private fun convertHuman(human: Human): HumanDto {
-    return HumanDto(
-        human.id,
-        human.age,
-        human.comments,
-        human.ethnos,
-        human.nationalities.map(Nationality::nationality),
-        human.city?.cityName,
-        human.city?.district?.countryCode,
-        human.city?.district?.districtName,
-        human.sex,
-        human.isMigrant
-    )
+    return repo.findAll().map(HumanConverter::convert)
   }
 }

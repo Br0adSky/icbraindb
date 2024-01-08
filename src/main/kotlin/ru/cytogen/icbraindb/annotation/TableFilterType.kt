@@ -5,5 +5,6 @@ enum class TableFilterType {
   BOOL,
   BOOL_EXISTS,
   MIN_MAX,
-  EXACT_LIST
+  EXACT_LIST,
+  SELECTION_LIST
 }

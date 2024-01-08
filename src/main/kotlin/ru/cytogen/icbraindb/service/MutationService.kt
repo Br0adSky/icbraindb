@@ -1,46 +1,52 @@
 package ru.cytogen.icbraindb.service
 
-import jakarta.persistence.EntityManager
-import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
-import ru.cytogen.icbraindb.model.Human
+import ru.cytogen.icbraindb.dto.MutationSortColumn
+import ru.cytogen.icbraindb.dto.common.Sort
+import ru.cytogen.icbraindb.dto.common.SortType
+import ru.cytogen.icbraindb.dto.request.PageRequestDto
+import ru.cytogen.icbraindb.dto.request.Request
+import ru.cytogen.icbraindb.dto.response.PageResponseDto
+import ru.cytogen.icbraindb.dto.response.Response
+import ru.cytogen.icbraindb.filter.MutationFilter
+import ru.cytogen.icbraindb.filter.service.FilterParser
 import ru.cytogen.icbraindb.model.Mutation
-import ru.cytogen.icbraindb.model.Mutation_
+import ru.cytogen.icbraindb.repository.MutationRepository
 
+typealias MutationSort = Sort<MutationSortColumn>
 
 @Service
 class MutationService(
-    private val entityManager: EntityManager
+    private val repo: MutationRepository
 ) {
-  fun findCommonMutations(humans: List<Human>): Iterable<Mutation> {
-    val page = PageRequest.of(0, 10)
-    val builder = entityManager.criteriaBuilder
-    val countQuery = builder.createQuery(Long::class.java)
-    val mutationsQuery = builder.createQuery(Mutation::class.java)
-    val mutationRoot = mutationsQuery.from(Mutation::class.java)
 
-    val query = countQuery.subquery(Long::class.java)
-    val root = query.from(Mutation::class.java)
+  fun getAll(request: Request<MutationFilter, MutationSortColumn>): Response<MutationFilter, MutationSortColumn> {
+    val page = request.page ?: PageRequestDto(0, 10)
+    val sort = request.sort ?: MutationSort(MutationSortColumn.CHROMOSOME, SortType.ASC)
+    val data = repo.findAll(getSpecification(request),
+        PageRequest.of(page.number, page.size)
+            .withSort(SortConverter.convert(sort))
+    ).map(MutationConverter::convert)
 
-    val summaryJoin = root.join(Mutation_.humans)
-    val inJoin = builder.`in`(summaryJoin)
-    humans.forEach(inJoin::value)
+    return Response(
+        data.toList(),
+        request.filter,
+        PageResponseDto(data.pageable.pageNumber, data.pageable.pageSize, data.totalPages),
+        sort,
+        FilterParser.getFilterCache(MutationFilter::class)
+    )
+  }
 
-    query.select(root.get(Mutation_.id))
-        .where(inJoin)
-        .groupBy(root.get(Mutation_.id))
-        .having(builder.equal(builder.count(root), humans.size))
-
-    countQuery.select(builder.count(query))
-    mutationsQuery.where(builder.`in`(mutationRoot.get(Mutation_.id)).value(query))
-
-    val total = entityManager.createQuery(countQuery).singleResult
-    val result = entityManager.createQuery(mutationsQuery)
-        .setMaxResults(page.pageSize)
-        .resultList
-
-
-    return PageImpl(result, page, total)
+  private fun getSpecification(request: Request<MutationFilter, MutationSortColumn>): Specification<Mutation> {
+    val filter = request.filter ?: return Specification.where(null)
+    return Specification.where(filter.mutation?.let(MutationSpecification::mutation))
+        .and(filter.types?.let(MutationSpecification::type))
+        .and(filter.chromosome?.let(MutationSpecification::chromosome))
+        .and(filter.gene?.let(MutationSpecification::gene))
+        .and(filter.position?.let(MutationSpecification::position))
+        .and(filter.humans?.let(MutationSpecification::humans))
+        .and(filter.refNucl?.let(MutationSpecification::refNucl))
   }
 }

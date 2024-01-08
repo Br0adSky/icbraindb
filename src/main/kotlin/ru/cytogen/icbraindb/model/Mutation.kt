@@ -13,13 +13,14 @@ class Mutation(
     val position: Long,
     @Column(name = "ref_nucl", nullable = false)
     val referenceNucleotide: String,
-    @Column(name = "type", nullable = false)
-    val type: Int
+    @Column(name = "type", nullable = false, columnDefinition = "integer")
+    @Enumerated
+    val type: MutationType
 ) : AbstractLongEntity() {
-    @ManyToMany
-    @JoinTable(
-        name = "human_mutations",
-        joinColumns = [JoinColumn(name = "snp_id")],
-        inverseJoinColumns = [JoinColumn(name = "human")])
-    val humans: MutableList<Human> = mutableListOf()
+  @ManyToMany
+  @JoinTable(
+      name = "human_mutations",
+      joinColumns = [JoinColumn(name = "snp_id")],
+      inverseJoinColumns = [JoinColumn(name = "human")])
+  val humans: MutableList<Human> = mutableListOf()
 }
