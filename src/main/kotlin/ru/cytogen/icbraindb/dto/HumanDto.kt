@@ -8,22 +8,22 @@ class HumanDto(
     @JsonProperty("human")
     val id: String,
     @JsonProperty("age")
-    val age: Int,
+    val age: Int?,
     @JsonProperty("comments")
     val comments: String?,
     @JsonProperty("ethnos")
     val ethos: String?,
-    @JsonProperty("nationality")
-    val nationality: String?,
-    @JsonProperty("nationality_en")
-    val nationalityEn: String?,
-    @JsonProperty("r_city")
-    val city: String?,
-    @JsonProperty("r_country")
+    @JsonProperty("nationalities")
+    val nationalities: List<String>?,
+    @JsonProperty("city")
+    val cityName: String?,
+    @JsonProperty("country")
     val country: String?,
-    @JsonProperty("r_district")
+    @JsonProperty("district")
     val district: String?,
-    @JsonProperty("sex")
-    val sex: Int
+    @JsonProperty("male")
+    val sex: Boolean?,
+    @JsonProperty("migrant")
+    val isMigrant: Boolean?
 ) {
 }

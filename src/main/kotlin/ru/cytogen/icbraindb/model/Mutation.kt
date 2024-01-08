@@ -3,18 +3,10 @@ package ru.cytogen.icbraindb.model
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "mutation")
+@Table(name = "mutation_snp")
 class Mutation(
-    @Id
-    @Column(name = "id", nullable = false, unique = true)
-    val id: Long,
-    @Column(name = "chromosome", nullable = false)
-    val chromosome: String,
-    @Column(name = "gene", nullable = false)
-    val gene: String,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="human", nullable=false)
-    val human: Human,
+    @ManyToOne
+    val gene: Gene,
     @Column(name = "mutation", nullable = false)
     val mutation: String,
     @Column(name = "position", nullable = false)
@@ -23,5 +15,11 @@ class Mutation(
     val referenceNucleotide: String,
     @Column(name = "type", nullable = false)
     val type: Int
-) {
+) : AbstractLongEntity() {
+    @ManyToMany
+    @JoinTable(
+        name = "human_mutations",
+        joinColumns = [JoinColumn(name = "snp_id")],
+        inverseJoinColumns = [JoinColumn(name = "human")])
+    val humans: MutableList<Human> = mutableListOf()
 }

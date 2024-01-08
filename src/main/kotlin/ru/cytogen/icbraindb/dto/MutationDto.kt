@@ -7,8 +7,6 @@ class MutationDto(
     val chromosome: String,
     @JsonProperty("gene")
     val gene: String,
-    @JsonProperty("human")
-    val human: String,
     @JsonProperty("id")
     val id: Long,
     @JsonProperty("mutation")
