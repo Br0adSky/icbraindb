@@ -23,10 +23,10 @@ SET row_security = off;
 -- Name: brain; Type: SCHEMA; Schema: -; Owner: savobraindb_admin
 --
 
-CREATE SCHEMA "brain";
+CREATE SCHEMA brain;
 
 
-ALTER SCHEMA "brain" OWNER TO "savobraindb_admin";
+ALTER SCHEMA brain OWNER TO "savobraindb_admin";
 
 SET default_tablespace = '';
 
@@ -37,7 +37,7 @@ SET default_table_access_method = "heap";
 -- Name: eeg_file; Type: TABLE; Schema: brain; Owner: savobraindb_admin
 --
 
-CREATE TABLE "brain"."eeg_file" (
+CREATE TABLE brain."eeg_file" (
     "id" integer NOT NULL,
     "human" character varying,
     "eeg_id" character varying NOT NULL,
@@ -47,14 +47,14 @@ CREATE TABLE "brain"."eeg_file" (
 );
 
 
-ALTER TABLE "brain"."eeg_file" OWNER TO "savobraindb_admin";
+ALTER TABLE brain."eeg_file" OWNER TO "savobraindb_admin";
 
 --
 -- TOC entry 218 (class 1259 OID 24929)
 -- Name: eeg_file_id_seq; Type: SEQUENCE; Schema: brain; Owner: savobraindb_admin
 --
 
-CREATE SEQUENCE "brain"."eeg_file_id_seq"
+CREATE SEQUENCE brain."eeg_file_id_seq"
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -63,7 +63,7 @@ CREATE SEQUENCE "brain"."eeg_file_id_seq"
     CACHE 1;
 
 
-ALTER TABLE "brain"."eeg_file_id_seq" OWNER TO "savobraindb_admin";
+ALTER TABLE brain."eeg_file_id_seq" OWNER TO "savobraindb_admin";
 
 --
 -- TOC entry 2912 (class 0 OID 0)
@@ -71,7 +71,7 @@ ALTER TABLE "brain"."eeg_file_id_seq" OWNER TO "savobraindb_admin";
 -- Name: eeg_file_id_seq; Type: SEQUENCE OWNED BY; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER SEQUENCE "brain"."eeg_file_id_seq" OWNED BY "brain"."eeg_file"."id";
+ALTER SEQUENCE brain."eeg_file_id_seq" OWNED BY brain."eeg_file"."id";
 
 
 --
@@ -79,7 +79,7 @@ ALTER SEQUENCE "brain"."eeg_file_id_seq" OWNED BY "brain"."eeg_file"."id";
 -- Name: human; Type: TABLE; Schema: brain; Owner: savobraindb_admin
 --
 
-CREATE TABLE "brain"."human" (
+CREATE TABLE brain."human" (
     "age" integer,
     "human" character varying NOT NULL,
     "nationality" character varying DEFAULT ''::character varying,
@@ -93,14 +93,14 @@ CREATE TABLE "brain"."human" (
 );
 
 
-ALTER TABLE "brain"."human" OWNER TO "savobraindb_admin";
+ALTER TABLE brain."human" OWNER TO "savobraindb_admin";
 
 --
 -- TOC entry 205 (class 1259 OID 16539)
 -- Name: mutation; Type: TABLE; Schema: brain; Owner: savobraindb_admin
 --
 
-CREATE TABLE "brain"."mutation" (
+CREATE TABLE brain."mutation" (
     "id" integer NOT NULL,
     "gene" character varying,
     "human" character varying NOT NULL,
@@ -112,14 +112,14 @@ CREATE TABLE "brain"."mutation" (
 );
 
 
-ALTER TABLE "brain"."mutation" OWNER TO "savobraindb_admin";
+ALTER TABLE brain."mutation" OWNER TO "savobraindb_admin";
 
 --
 -- TOC entry 204 (class 1259 OID 16537)
 -- Name: mutation_id_seq; Type: SEQUENCE; Schema: brain; Owner: savobraindb_admin
 --
 
-CREATE SEQUENCE "brain"."mutation_id_seq"
+CREATE SEQUENCE brain."mutation_id_seq"
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -128,7 +128,7 @@ CREATE SEQUENCE "brain"."mutation_id_seq"
     CACHE 1;
 
 
-ALTER TABLE "brain"."mutation_id_seq" OWNER TO "savobraindb_admin";
+ALTER TABLE brain."mutation_id_seq" OWNER TO "savobraindb_admin";
 
 --
 -- TOC entry 2913 (class 0 OID 0)
@@ -136,7 +136,7 @@ ALTER TABLE "brain"."mutation_id_seq" OWNER TO "savobraindb_admin";
 -- Name: mutation_id_seq; Type: SEQUENCE OWNED BY; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER SEQUENCE "brain"."mutation_id_seq" OWNED BY "brain"."mutation"."id";
+ALTER SEQUENCE brain."mutation_id_seq" OWNED BY brain."mutation"."id";
 
 
 --
@@ -144,7 +144,7 @@ ALTER SEQUENCE "brain"."mutation_id_seq" OWNED BY "brain"."mutation"."id";
 -- Name: test; Type: TABLE; Schema: brain; Owner: savobraindb_admin
 --
 
-CREATE TABLE "brain"."test" (
+CREATE TABLE brain."test" (
     "test" integer NOT NULL,
     "name" character varying NOT NULL,
     "description" character varying NOT NULL,
@@ -154,7 +154,7 @@ CREATE TABLE "brain"."test" (
 );
 
 
-ALTER TABLE "brain"."test" OWNER TO "savobraindb_admin";
+ALTER TABLE brain."test" OWNER TO "savobraindb_admin";
 
 --
 -- TOC entry 2914 (class 0 OID 0)
@@ -162,7 +162,7 @@ ALTER TABLE "brain"."test" OWNER TO "savobraindb_admin";
 -- Name: COLUMN "test"."alias"; Type: COMMENT; Schema: brain; Owner: savobraindb_admin
 --
 
-COMMENT ON COLUMN "brain"."test"."alias" IS 'English version';
+COMMENT ON COLUMN brain."test"."alias" IS 'English version';
 
 
 --
@@ -170,7 +170,7 @@ COMMENT ON COLUMN "brain"."test"."alias" IS 'English version';
 -- Name: test_test_seq; Type: SEQUENCE; Schema: brain; Owner: savobraindb_admin
 --
 
-CREATE SEQUENCE "brain"."test_test_seq"
+CREATE SEQUENCE brain."test_test_seq"
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -179,7 +179,7 @@ CREATE SEQUENCE "brain"."test_test_seq"
     CACHE 1;
 
 
-ALTER TABLE "brain"."test_test_seq" OWNER TO "savobraindb_admin";
+ALTER TABLE brain."test_test_seq" OWNER TO "savobraindb_admin";
 
 --
 -- TOC entry 2915 (class 0 OID 0)
@@ -187,7 +187,7 @@ ALTER TABLE "brain"."test_test_seq" OWNER TO "savobraindb_admin";
 -- Name: test_test_seq; Type: SEQUENCE OWNED BY; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER SEQUENCE "brain"."test_test_seq" OWNED BY "brain"."test"."test";
+ALTER SEQUENCE brain."test_test_seq" OWNED BY brain."test"."test";
 
 
 --
@@ -195,7 +195,7 @@ ALTER SEQUENCE "brain"."test_test_seq" OWNED BY "brain"."test"."test";
 -- Name: testquestion; Type: TABLE; Schema: brain; Owner: savobraindb_admin
 --
 
-CREATE TABLE "brain"."testquestion" (
+CREATE TABLE brain."testquestion" (
     "id" integer NOT NULL,
     "test" bigint NOT NULL,
     "question" character varying NOT NULL,
@@ -205,14 +205,14 @@ CREATE TABLE "brain"."testquestion" (
 );
 
 
-ALTER TABLE "brain"."testquestion" OWNER TO "savobraindb_admin";
+ALTER TABLE brain."testquestion" OWNER TO "savobraindb_admin";
 
 --
 -- TOC entry 210 (class 1259 OID 16575)
 -- Name: testquestion_id_seq; Type: SEQUENCE; Schema: brain; Owner: savobraindb_admin
 --
 
-CREATE SEQUENCE "brain"."testquestion_id_seq"
+CREATE SEQUENCE brain."testquestion_id_seq"
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -221,7 +221,7 @@ CREATE SEQUENCE "brain"."testquestion_id_seq"
     CACHE 1;
 
 
-ALTER TABLE "brain"."testquestion_id_seq" OWNER TO "savobraindb_admin";
+ALTER TABLE brain."testquestion_id_seq" OWNER TO "savobraindb_admin";
 
 --
 -- TOC entry 2916 (class 0 OID 0)
@@ -229,7 +229,7 @@ ALTER TABLE "brain"."testquestion_id_seq" OWNER TO "savobraindb_admin";
 -- Name: testquestion_id_seq; Type: SEQUENCE OWNED BY; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER SEQUENCE "brain"."testquestion_id_seq" OWNED BY "brain"."testquestion"."id";
+ALTER SEQUENCE brain."testquestion_id_seq" OWNED BY brain."testquestion"."id";
 
 
 --
@@ -237,7 +237,7 @@ ALTER SEQUENCE "brain"."testquestion_id_seq" OWNED BY "brain"."testquestion"."id
 -- Name: testresponsetype; Type: TABLE; Schema: brain; Owner: savobraindb_admin
 --
 
-CREATE TABLE "brain"."testresponsetype" (
+CREATE TABLE brain."testresponsetype" (
     "id" integer NOT NULL,
     "text" character varying NOT NULL,
     "value" integer NOT NULL,
@@ -247,14 +247,14 @@ CREATE TABLE "brain"."testresponsetype" (
 );
 
 
-ALTER TABLE "brain"."testresponsetype" OWNER TO "savobraindb_admin";
+ALTER TABLE brain."testresponsetype" OWNER TO "savobraindb_admin";
 
 --
 -- TOC entry 208 (class 1259 OID 16564)
 -- Name: testresponsetype_id_seq; Type: SEQUENCE; Schema: brain; Owner: savobraindb_admin
 --
 
-CREATE SEQUENCE "brain"."testresponsetype_id_seq"
+CREATE SEQUENCE brain."testresponsetype_id_seq"
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -263,7 +263,7 @@ CREATE SEQUENCE "brain"."testresponsetype_id_seq"
     CACHE 1;
 
 
-ALTER TABLE "brain"."testresponsetype_id_seq" OWNER TO "savobraindb_admin";
+ALTER TABLE brain."testresponsetype_id_seq" OWNER TO "savobraindb_admin";
 
 --
 -- TOC entry 2917 (class 0 OID 0)
@@ -271,7 +271,7 @@ ALTER TABLE "brain"."testresponsetype_id_seq" OWNER TO "savobraindb_admin";
 -- Name: testresponsetype_id_seq; Type: SEQUENCE OWNED BY; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER SEQUENCE "brain"."testresponsetype_id_seq" OWNED BY "brain"."testresponsetype"."id";
+ALTER SEQUENCE brain."testresponsetype_id_seq" OWNED BY brain."testresponsetype"."id";
 
 
 --
@@ -279,7 +279,7 @@ ALTER SEQUENCE "brain"."testresponsetype_id_seq" OWNED BY "brain"."testresponset
 -- Name: testresults; Type: TABLE; Schema: brain; Owner: savobraindb_admin
 --
 
-CREATE TABLE "brain"."testresults" (
+CREATE TABLE brain."testresults" (
     "id" integer NOT NULL,
     "testquestion" integer NOT NULL,
     "human" character varying NOT NULL,
@@ -287,14 +287,14 @@ CREATE TABLE "brain"."testresults" (
 );
 
 
-ALTER TABLE "brain"."testresults" OWNER TO "savobraindb_admin";
+ALTER TABLE brain."testresults" OWNER TO "savobraindb_admin";
 
 --
 -- TOC entry 212 (class 1259 OID 16591)
 -- Name: testresults_id_seq; Type: SEQUENCE; Schema: brain; Owner: savobraindb_admin
 --
 
-CREATE SEQUENCE "brain"."testresults_id_seq"
+CREATE SEQUENCE brain."testresults_id_seq"
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -303,7 +303,7 @@ CREATE SEQUENCE "brain"."testresults_id_seq"
     CACHE 1;
 
 
-ALTER TABLE "brain"."testresults_id_seq" OWNER TO "savobraindb_admin";
+ALTER TABLE brain."testresults_id_seq" OWNER TO "savobraindb_admin";
 
 --
 -- TOC entry 2918 (class 0 OID 0)
@@ -311,7 +311,7 @@ ALTER TABLE "brain"."testresults_id_seq" OWNER TO "savobraindb_admin";
 -- Name: testresults_id_seq; Type: SEQUENCE OWNED BY; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER SEQUENCE "brain"."testresults_id_seq" OWNED BY "brain"."testresults"."id";
+ALTER SEQUENCE brain."testresults_id_seq" OWNED BY brain."testresults"."id";
 
 
 --
@@ -319,7 +319,7 @@ ALTER SEQUENCE "brain"."testresults_id_seq" OWNED BY "brain"."testresults"."id";
 -- Name: testsummary; Type: TABLE; Schema: brain; Owner: savobraindb_admin
 --
 
-CREATE TABLE "brain"."testsummary" (
+CREATE TABLE brain."testsummary" (
     "id" integer NOT NULL,
     "human" character varying NOT NULL,
     "test" integer,
@@ -329,14 +329,14 @@ CREATE TABLE "brain"."testsummary" (
 );
 
 
-ALTER TABLE "brain"."testsummary" OWNER TO "savobraindb_admin";
+ALTER TABLE brain."testsummary" OWNER TO "savobraindb_admin";
 
 --
 -- TOC entry 217 (class 1259 OID 24918)
 -- Name: testsummary2test; Type: TABLE; Schema: brain; Owner: savobraindb_admin
 --
 
-CREATE TABLE "brain"."testsummary2test" (
+CREATE TABLE brain."testsummary2test" (
     "id" integer NOT NULL,
     "test" integer NOT NULL,
     "testsammaryalias" character varying NOT NULL,
@@ -345,14 +345,14 @@ CREATE TABLE "brain"."testsummary2test" (
 );
 
 
-ALTER TABLE "brain"."testsummary2test" OWNER TO "savobraindb_admin";
+ALTER TABLE brain."testsummary2test" OWNER TO "savobraindb_admin";
 
 --
 -- TOC entry 216 (class 1259 OID 24916)
 -- Name: testsummary2test_id_seq; Type: SEQUENCE; Schema: brain; Owner: savobraindb_admin
 --
 
-CREATE SEQUENCE "brain"."testsummary2test_id_seq"
+CREATE SEQUENCE brain."testsummary2test_id_seq"
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -361,7 +361,7 @@ CREATE SEQUENCE "brain"."testsummary2test_id_seq"
     CACHE 1;
 
 
-ALTER TABLE "brain"."testsummary2test_id_seq" OWNER TO "savobraindb_admin";
+ALTER TABLE brain."testsummary2test_id_seq" OWNER TO "savobraindb_admin";
 
 --
 -- TOC entry 2919 (class 0 OID 0)
@@ -369,7 +369,7 @@ ALTER TABLE "brain"."testsummary2test_id_seq" OWNER TO "savobraindb_admin";
 -- Name: testsummary2test_id_seq; Type: SEQUENCE OWNED BY; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER SEQUENCE "brain"."testsummary2test_id_seq" OWNED BY "brain"."testsummary2test"."id";
+ALTER SEQUENCE brain."testsummary2test_id_seq" OWNED BY brain."testsummary2test"."id";
 
 
 --
@@ -377,7 +377,7 @@ ALTER SEQUENCE "brain"."testsummary2test_id_seq" OWNED BY "brain"."testsummary2t
 -- Name: testsummary_id_seq; Type: SEQUENCE; Schema: brain; Owner: savobraindb_admin
 --
 
-CREATE SEQUENCE "brain"."testsummary_id_seq"
+CREATE SEQUENCE brain."testsummary_id_seq"
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -386,7 +386,7 @@ CREATE SEQUENCE "brain"."testsummary_id_seq"
     CACHE 1;
 
 
-ALTER TABLE "brain"."testsummary_id_seq" OWNER TO "savobraindb_admin";
+ALTER TABLE brain."testsummary_id_seq" OWNER TO "savobraindb_admin";
 
 --
 -- TOC entry 2920 (class 0 OID 0)
@@ -394,7 +394,7 @@ ALTER TABLE "brain"."testsummary_id_seq" OWNER TO "savobraindb_admin";
 -- Name: testsummary_id_seq; Type: SEQUENCE OWNED BY; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER SEQUENCE "brain"."testsummary_id_seq" OWNED BY "brain"."testsummary"."id";
+ALTER SEQUENCE brain."testsummary_id_seq" OWNED BY brain."testsummary"."id";
 
 
 --
@@ -402,7 +402,7 @@ ALTER SEQUENCE "brain"."testsummary_id_seq" OWNED BY "brain"."testsummary"."id";
 -- Name: eeg_file id; Type: DEFAULT; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER TABLE ONLY "brain"."eeg_file" ALTER COLUMN "id" SET DEFAULT "nextval"('"brain"."eeg_file_id_seq"'::"regclass");
+ALTER TABLE ONLY brain."eeg_file" ALTER COLUMN "id" SET DEFAULT "nextval"('"brain"."eeg_file_id_seq"'::"regclass");
 
 
 --
@@ -410,7 +410,7 @@ ALTER TABLE ONLY "brain"."eeg_file" ALTER COLUMN "id" SET DEFAULT "nextval"('"br
 -- Name: mutation id; Type: DEFAULT; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER TABLE ONLY "brain"."mutation" ALTER COLUMN "id" SET DEFAULT "nextval"('"brain"."mutation_id_seq"'::"regclass");
+ALTER TABLE ONLY brain."mutation" ALTER COLUMN "id" SET DEFAULT "nextval"('"brain"."mutation_id_seq"'::"regclass");
 
 
 --
@@ -418,7 +418,7 @@ ALTER TABLE ONLY "brain"."mutation" ALTER COLUMN "id" SET DEFAULT "nextval"('"br
 -- Name: test test; Type: DEFAULT; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER TABLE ONLY "brain"."test" ALTER COLUMN "test" SET DEFAULT "nextval"('"brain"."test_test_seq"'::"regclass");
+ALTER TABLE ONLY brain."test" ALTER COLUMN "test" SET DEFAULT "nextval"('"brain"."test_test_seq"'::"regclass");
 
 
 --
@@ -426,7 +426,7 @@ ALTER TABLE ONLY "brain"."test" ALTER COLUMN "test" SET DEFAULT "nextval"('"brai
 -- Name: testquestion id; Type: DEFAULT; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER TABLE ONLY "brain"."testquestion" ALTER COLUMN "id" SET DEFAULT "nextval"('"brain"."testquestion_id_seq"'::"regclass");
+ALTER TABLE ONLY brain."testquestion" ALTER COLUMN "id" SET DEFAULT "nextval"('"brain"."testquestion_id_seq"'::"regclass");
 
 
 --
@@ -434,7 +434,7 @@ ALTER TABLE ONLY "brain"."testquestion" ALTER COLUMN "id" SET DEFAULT "nextval"(
 -- Name: testresponsetype id; Type: DEFAULT; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER TABLE ONLY "brain"."testresponsetype" ALTER COLUMN "id" SET DEFAULT "nextval"('"brain"."testresponsetype_id_seq"'::"regclass");
+ALTER TABLE ONLY brain."testresponsetype" ALTER COLUMN "id" SET DEFAULT "nextval"('"brain"."testresponsetype_id_seq"'::"regclass");
 
 
 --
@@ -442,7 +442,7 @@ ALTER TABLE ONLY "brain"."testresponsetype" ALTER COLUMN "id" SET DEFAULT "nextv
 -- Name: testresults id; Type: DEFAULT; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER TABLE ONLY "brain"."testresults" ALTER COLUMN "id" SET DEFAULT "nextval"('"brain"."testresults_id_seq"'::"regclass");
+ALTER TABLE ONLY brain."testresults" ALTER COLUMN "id" SET DEFAULT "nextval"('"brain"."testresults_id_seq"'::"regclass");
 
 
 --
@@ -450,7 +450,7 @@ ALTER TABLE ONLY "brain"."testresults" ALTER COLUMN "id" SET DEFAULT "nextval"('
 -- Name: testsummary id; Type: DEFAULT; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER TABLE ONLY "brain"."testsummary" ALTER COLUMN "id" SET DEFAULT "nextval"('"brain"."testsummary_id_seq"'::"regclass");
+ALTER TABLE ONLY brain."testsummary" ALTER COLUMN "id" SET DEFAULT "nextval"('"brain"."testsummary_id_seq"'::"regclass");
 
 
 --
@@ -458,7 +458,7 @@ ALTER TABLE ONLY "brain"."testsummary" ALTER COLUMN "id" SET DEFAULT "nextval"('
 -- Name: testsummary2test id; Type: DEFAULT; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER TABLE ONLY "brain"."testsummary2test" ALTER COLUMN "id" SET DEFAULT "nextval"('"brain"."testsummary2test_id_seq"'::"regclass");
+ALTER TABLE ONLY brain."testsummary2test" ALTER COLUMN "id" SET DEFAULT "nextval"('"brain"."testsummary2test_id_seq"'::"regclass");
 
 
 --
@@ -466,7 +466,7 @@ ALTER TABLE ONLY "brain"."testsummary2test" ALTER COLUMN "id" SET DEFAULT "nextv
 -- Name: eeg_file eeg_file_pkey; Type: CONSTRAINT; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER TABLE ONLY "brain"."eeg_file"
+ALTER TABLE ONLY brain."eeg_file"
     ADD CONSTRAINT "eeg_file_pkey" PRIMARY KEY ("id");
 
 
@@ -475,7 +475,7 @@ ALTER TABLE ONLY "brain"."eeg_file"
 -- Name: human human_pkey; Type: CONSTRAINT; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER TABLE ONLY "brain"."human"
+ALTER TABLE ONLY brain."human"
     ADD CONSTRAINT "human_pkey" PRIMARY KEY ("human");
 
 
@@ -484,7 +484,7 @@ ALTER TABLE ONLY "brain"."human"
 -- Name: mutation mutation_pkey; Type: CONSTRAINT; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER TABLE ONLY "brain"."mutation"
+ALTER TABLE ONLY brain."mutation"
     ADD CONSTRAINT "mutation_pkey" PRIMARY KEY ("id");
 
 
@@ -493,7 +493,7 @@ ALTER TABLE ONLY "brain"."mutation"
 -- Name: test test_pkey; Type: CONSTRAINT; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER TABLE ONLY "brain"."test"
+ALTER TABLE ONLY brain."test"
     ADD CONSTRAINT "test_pkey" PRIMARY KEY ("test");
 
 
@@ -502,7 +502,7 @@ ALTER TABLE ONLY "brain"."test"
 -- Name: testquestion testquestion_pkey; Type: CONSTRAINT; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER TABLE ONLY "brain"."testquestion"
+ALTER TABLE ONLY brain."testquestion"
     ADD CONSTRAINT "testquestion_pkey" PRIMARY KEY ("id");
 
 
@@ -511,7 +511,7 @@ ALTER TABLE ONLY "brain"."testquestion"
 -- Name: testresponsetype testresponsetype_pkey; Type: CONSTRAINT; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER TABLE ONLY "brain"."testresponsetype"
+ALTER TABLE ONLY brain."testresponsetype"
     ADD CONSTRAINT "testresponsetype_pkey" PRIMARY KEY ("id");
 
 
@@ -520,7 +520,7 @@ ALTER TABLE ONLY "brain"."testresponsetype"
 -- Name: testresults testresults_pkey; Type: CONSTRAINT; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER TABLE ONLY "brain"."testresults"
+ALTER TABLE ONLY brain."testresults"
     ADD CONSTRAINT "testresults_pkey" PRIMARY KEY ("id");
 
 
@@ -529,7 +529,7 @@ ALTER TABLE ONLY "brain"."testresults"
 -- Name: testsummary2test testsummary2test_pkey; Type: CONSTRAINT; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER TABLE ONLY "brain"."testsummary2test"
+ALTER TABLE ONLY brain."testsummary2test"
     ADD CONSTRAINT "testsummary2test_pkey" PRIMARY KEY ("id");
 
 
@@ -538,7 +538,7 @@ ALTER TABLE ONLY "brain"."testsummary2test"
 -- Name: testsummary testsummary_pkey; Type: CONSTRAINT; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER TABLE ONLY "brain"."testsummary"
+ALTER TABLE ONLY brain."testsummary"
     ADD CONSTRAINT "testsummary_pkey" PRIMARY KEY ("id");
 
 
@@ -547,7 +547,7 @@ ALTER TABLE ONLY "brain"."testsummary"
 -- Name: testsummary2test uniquet2ts; Type: CONSTRAINT; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER TABLE ONLY "brain"."testsummary2test"
+ALTER TABLE ONLY brain."testsummary2test"
     ADD CONSTRAINT "uniquet2ts" UNIQUE ("test", "testsammaryalias");
 
 
@@ -556,8 +556,8 @@ ALTER TABLE ONLY "brain"."testsummary2test"
 -- Name: mutation mutation_fk; Type: FK CONSTRAINT; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER TABLE ONLY "brain"."mutation"
-    ADD CONSTRAINT "mutation_fk" FOREIGN KEY ("human") REFERENCES "brain"."human"("human");
+ALTER TABLE ONLY brain."mutation"
+    ADD CONSTRAINT "mutation_fk" FOREIGN KEY ("human") REFERENCES brain."human"("human");
 
 
 --
@@ -565,8 +565,8 @@ ALTER TABLE ONLY "brain"."mutation"
 -- Name: testquestion testq_fk; Type: FK CONSTRAINT; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER TABLE ONLY "brain"."testquestion"
-    ADD CONSTRAINT "testq_fk" FOREIGN KEY ("test") REFERENCES "brain"."test"("test");
+ALTER TABLE ONLY brain."testquestion"
+    ADD CONSTRAINT "testq_fk" FOREIGN KEY ("test") REFERENCES brain."test"("test");
 
 
 --
@@ -574,8 +574,8 @@ ALTER TABLE ONLY "brain"."testquestion"
 -- Name: testresults testres_fk; Type: FK CONSTRAINT; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER TABLE ONLY "brain"."testresults"
-    ADD CONSTRAINT "testres_fk" FOREIGN KEY ("testquestion") REFERENCES "brain"."testquestion"("id");
+ALTER TABLE ONLY brain."testresults"
+    ADD CONSTRAINT "testres_fk" FOREIGN KEY ("testquestion") REFERENCES brain."testquestion"("id");
 
 
 --
@@ -583,8 +583,8 @@ ALTER TABLE ONLY "brain"."testresults"
 -- Name: testresults testres_hfk; Type: FK CONSTRAINT; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER TABLE ONLY "brain"."testresults"
-    ADD CONSTRAINT "testres_hfk" FOREIGN KEY ("human") REFERENCES "brain"."human"("human");
+ALTER TABLE ONLY brain."testresults"
+    ADD CONSTRAINT "testres_hfk" FOREIGN KEY ("human") REFERENCES brain."human"("human");
 
 
 --
@@ -592,8 +592,8 @@ ALTER TABLE ONLY "brain"."testresults"
 -- Name: testsummary toHumanFk; Type: FK CONSTRAINT; Schema: brain; Owner: savobraindb_admin
 --
 
-ALTER TABLE ONLY "brain"."testsummary"
-    ADD CONSTRAINT "toHumanFk" FOREIGN KEY ("human") REFERENCES "brain"."human"("human");
+ALTER TABLE ONLY brain."testsummary"
+    ADD CONSTRAINT "toHumanFk" FOREIGN KEY ("human") REFERENCES brain."human"("human");
 
 
 -- Completed on 2023-11-10 16:11:29

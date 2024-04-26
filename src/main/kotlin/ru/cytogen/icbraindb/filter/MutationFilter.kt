@@ -1,29 +1,37 @@
 package ru.cytogen.icbraindb.filter
 
 import com.fasterxml.jackson.annotation.JsonInclude
-import ru.cytogen.icbraindb.annotation.TableFilter
-import ru.cytogen.icbraindb.annotation.TableFilterType
+import jakarta.validation.Valid
+import ru.cytogen.icbraindb.config.validation.minmaxfilter.MinMaxValidation
 import ru.cytogen.icbraindb.filter.types.ExactEnumTypeFilter
 import ru.cytogen.icbraindb.filter.types.ListOfExactFilters
 import ru.cytogen.icbraindb.filter.types.MinMaxFilter
 import ru.cytogen.icbraindb.filter.types.StringFilter
-import ru.cytogen.icbraindb.model.MutationType
+import ru.cytogen.icbraindb.model.db.mutation.MutationType
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 class MutationFilter(
-    @TableFilter(type = TableFilterType.STRING, "Хромосома")
+    @TableFilter(type = TableFilterType.STRING, "MUTATION_FILTER_CHROMOSOME")
+    @field:Valid
     val chromosome: StringFilter?,
-    @TableFilter(type = TableFilterType.STRING, "Мутация")
+    @TableFilter(type = TableFilterType.STRING, "MUTATION_FILTER_MUTATION")
+    @field:Valid
     val mutation: StringFilter?,
-    @TableFilter(type = TableFilterType.MIN_MAX, "Позиция")
-    val position: MinMaxFilter?,
-    @TableFilter(type = TableFilterType.STRING, "Ген")
+    @TableFilter(type = TableFilterType.MIN_MAX, "MUTATION_FILTER_POSITION")
+    @field:Valid
+    @field:MinMaxValidation
+    val position: MinMaxFilter<Long>?,
+    @TableFilter(type = TableFilterType.STRING, "MUTATION_FILTER_GENE")
+    @field:Valid
     val gene: StringFilter?,
-    @TableFilter(type = TableFilterType.STRING, "Референсный вариант")
+    @TableFilter(type = TableFilterType.STRING, "MUTATION_FILTER_REF_NUCL")
+    @field:Valid
     val refNucl: StringFilter?,
-    @TableFilter(type = TableFilterType.SELECTION_LIST, "Тип мутации", MutationType::class)
+    @TableFilter(type = TableFilterType.SELECTION_LIST, "MUTATION_FILTER_TYPE")
+    @field:Valid
     val types: ExactEnumTypeFilter<MutationType>?,
-    @TableFilter(type = TableFilterType.EXACT_LIST, "Идентификаторы людей")
+    @TableFilter(type = TableFilterType.EXACT_LIST, "MUTATION_FILTER_HUMANS")
+    @field:Valid
     val humans: ListOfExactFilters?
 ) : BaseTableFilter {
 }

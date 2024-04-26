@@ -5,11 +5,18 @@ spring:
     password: savobraindb_admin
   flyway:
     baseline-on-migrate: true
-  #    default-schema: brain
   jpa:
     hibernate:
       ddl-auto: validate
-#    properties:
-#      hibernate:
-#        default_schema: brain
+#    show-sql: true
+    open-in-view: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8080/realms/icbraindb/protocol/openid-connect/certs
+server:
+  port: 8000
 
+client:
+  url: http://localhost:7200

@@ -1,18 +1,11 @@
 -- создание необходимых в дальнейшем таблиц
-create table if not exists districts
+create table if not exists cities
 (
     id         bigint primary key generated always as identity,
     r_country  varchar(3) not null,
     r_district varchar(5),
-    unique (r_district, r_country)
-);
-
-create table if not exists cities
-(
-    id         bigint primary key generated always as identity,
-    r_district bigint references districts not null,
     r_city     varchar,
-    unique (r_city, r_district)
+    unique (r_city, r_district, r_country)
 );
 
 create table if not exists nationalities
@@ -76,26 +69,19 @@ from human_diseases as d
 where r_city = d.disease;
 
 -- заполняем города, страны и области
-insert into districts(r_district, r_country)
-select distinct h.r_district, h.r_country
-from human as h
-where h.r_country is not null;
-
-insert into cities (r_district, r_city)
-select distinct d.id, h.r_city
+insert into cities (r_city, r_district, r_country)
+select distinct h.r_city, h.r_district, h.r_country
 from human h
-         join districts d on h.r_country = d.r_country and h.r_district = d.r_district
 where h.r_country is not null;
 
 alter table human
     add column if not exists city bigint references cities;
 update human h
 set city = c.id
-from cities c,
-     districts d
+from cities c
 where c.r_city = h.r_city
-  and d.r_district = h.r_district
-  and d.r_country = h.r_country;
+  and c.r_district = h.r_district
+  and c.r_country = h.r_country;
 
 alter table human
     drop column if exists r_city;

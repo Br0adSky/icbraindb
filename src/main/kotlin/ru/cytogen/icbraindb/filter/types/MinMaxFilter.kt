@@ -1,22 +1,7 @@
 package ru.cytogen.icbraindb.filter.types
 
-import jakarta.validation.constraints.AssertTrue
-
-class MinMaxFilter(
-    val min: Long?,
-    val max: Long?
+class MinMaxFilter<T : Comparable<T>>(
+    val min: T?,
+    val max: T?
 ) : BaseFilter() {
-  @AssertTrue(message = "min or max required")
-  fun isMinOrMax(): Boolean {
-    return min != null || max != null
-  }
-
-  @AssertTrue(message = "min mast be less than max")
-  fun isMinLessThanMax(): Boolean {
-    if (max != null && min != null) {
-      return max > min
-    }
-
-    return isMinOrMax()
-  }
 }

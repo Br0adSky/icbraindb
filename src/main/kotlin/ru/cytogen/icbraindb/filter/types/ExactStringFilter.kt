@@ -1,9 +1,9 @@
 package ru.cytogen.icbraindb.filter.types
 
-import jakarta.validation.constraints.NotEmpty
+import jakarta.validation.constraints.NotBlank
 
 class ExactStringFilter(
-    @field:NotEmpty
+    @field:NotBlank
     val value: String
 ) {
 }

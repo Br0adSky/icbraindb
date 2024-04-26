@@ -2,7 +2,7 @@ package ru.cytogen.icbraindb.dto.response
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
-import ru.cytogen.icbraindb.annotation.TableFilterType
+import ru.cytogen.icbraindb.filter.TableFilterType
 
 class FilterScheme(
     val filters: List<TableFilterDto>
@@ -13,6 +13,8 @@ class FilterScheme(
       val type: TableFilterType,
       @JsonProperty
       val name: String,
+      @JsonProperty
+      val description: String,
       @JsonProperty
       val options: List<String>? = null
   )

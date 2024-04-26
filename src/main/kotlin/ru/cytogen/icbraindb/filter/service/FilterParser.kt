@@ -1,36 +1,45 @@
 package ru.cytogen.icbraindb.filter.service
 
-import ru.cytogen.icbraindb.annotation.TableFilter
-import ru.cytogen.icbraindb.annotation.TableFilterType
 import ru.cytogen.icbraindb.dto.response.FilterScheme
 import ru.cytogen.icbraindb.filter.BaseTableFilter
-import ru.cytogen.icbraindb.model.ModelEnum
-import ru.cytogen.icbraindb.model.MutationType
+import ru.cytogen.icbraindb.filter.TableFilter
+import ru.cytogen.icbraindb.filter.TableFilterType
 import kotlin.reflect.KClass
-import kotlin.reflect.full.declaredMemberProperties
-import kotlin.reflect.full.findAnnotation
-import kotlin.reflect.full.staticFunctions
+import kotlin.reflect.KProperty1
+import kotlin.reflect.full.*
 
 object FilterParser {
-  private val filterCache: MutableMap<KClass<out BaseTableFilter>, FilterScheme> = mutableMapOf()
 
-  fun getFilterCache(kClass: KClass<out BaseTableFilter>): FilterScheme {
-    return filterCache.computeIfAbsent(kClass, ::computeFilterScheme)
-  }
-
-  private fun computeFilterScheme(kClass: KClass<out BaseTableFilter>): FilterScheme {
-    return FilterScheme(kClass.declaredMemberProperties.asSequence()
-        .mapNotNull { it.findAnnotation<TableFilter>() }
-        .map(::mapTableFilter)
-        .toList())
-  }
-
-  private fun mapTableFilter(filter: TableFilter): FilterScheme.TableFilterDto {
-    if (filter.type == TableFilterType.SELECTION_LIST) {
-      val enumValues = MutationType::class.staticFunctions.find { it.name == "values" }!!.call() as Array<out ModelEnum>
-      return FilterScheme.TableFilterDto(filter.type, filter.name, enumValues.map { it.getDescription() })
+    fun getFilterCache(kClass: KClass<out BaseTableFilter>): FilterScheme {
+        return computeFilterScheme(kClass)
     }
 
-    return FilterScheme.TableFilterDto(filter.type, filter.name)
-  }
+    private fun computeFilterScheme(kClass: KClass<out BaseTableFilter>): FilterScheme {
+        return FilterScheme(kClass.declaredMemberProperties.asSequence()
+            .filter { it.hasAnnotation<TableFilter>() }
+            .map { mapTableFilter(it) }
+            .toList())
+    }
+
+    private fun mapTableFilter(
+        property: KProperty1<out BaseTableFilter, *>
+    ): FilterScheme.TableFilterDto {
+        val filter = property.findAnnotation<TableFilter>()!!
+        if (filter.type == TableFilterType.SELECTION_LIST) {
+            val enumValues =
+                (property.returnType.arguments.find { it.type!!.isSubtypeOf(Enum::class.starProjectedType) }!!
+                    .type!!
+                    .classifier as KClass<Enum<*>>)
+                    .staticFunctions
+                    .find { it.name == "values" }!!
+                    .call() as Array<out Enum<*>>
+            return FilterScheme.TableFilterDto(
+                filter.type,
+                property.name,
+                filter.name,
+                enumValues.map { it.name })
+        }
+
+        return FilterScheme.TableFilterDto(filter.type, property.name, filter.name)
+    }
 }

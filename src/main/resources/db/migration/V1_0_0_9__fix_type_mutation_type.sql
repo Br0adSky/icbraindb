@@ -1,2 +1,2 @@
-alter table mutation_snp
+alter table human_mutations
     alter column type type smallint;

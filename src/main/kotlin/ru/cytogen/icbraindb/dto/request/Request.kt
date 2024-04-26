@@ -11,8 +11,8 @@ class Request<T : BaseTableFilter, S : SortColumn>(
     @field:Valid
     val filter: T?,
     @JsonProperty("page")
-    val page: PageRequestDto?,
+    val page: PageRequestDto = PageRequestDto(0, 10),
     @JsonProperty("sort")
-    val sort: Sort<S>?
+    val sort: List<Sort<S>> = listOf()
 ) {
 }

@@ -12,8 +12,8 @@ alter table mutation_snp
 alter table mutation_snp
     alter column position set not null;
 
-alter table mutation_snp
+alter table human_mutations
     alter column mutation set not null;
 
-alter table mutation_snp
+alter table human_mutations
     alter column type set not null;
