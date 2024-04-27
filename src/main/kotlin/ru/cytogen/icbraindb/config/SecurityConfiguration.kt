@@ -19,7 +19,6 @@ class SecurityConfiguration {
             it.requestMatchers("api/*/delete/{id}").authenticated()
             it.requestMatchers("api/*/edit").authenticated()
             it.requestMatchers("api/*/metadata").permitAll()
-            it.requestMatchers("api/*/available").permitAll()
             it.requestMatchers("api/*/{id}").permitAll()
             it.requestMatchers("api/*/").permitAll()
             it.requestMatchers("swagger-ui/**").permitAll()

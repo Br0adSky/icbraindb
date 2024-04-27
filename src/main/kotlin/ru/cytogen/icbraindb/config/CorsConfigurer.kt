@@ -27,7 +27,6 @@ class CorsConfigurer(
         val secConfiguration = createSecuredConfiguration()
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("api/*/metadata", configuration)
-        source.registerCorsConfiguration("api/*/available", configuration)
         source.registerCorsConfiguration("api/*/{id}", configuration)
         source.registerCorsConfiguration("api/*/", configuration)
         source.registerCorsConfiguration("api/*/delete/{id}", secConfiguration)

@@ -25,7 +25,7 @@ class DiseaseController(
         return service.delete(id!!)
     }
 
-    @GetMapping("/available")
+    @GetMapping("/")
     fun getAvailable(): List<DiseaseDto> {
         return service.getAllAvailable()
     }

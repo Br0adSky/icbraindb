@@ -15,17 +15,17 @@ alter table testsummary2test
 
 -- добавление ссылки на testsummary2test
 alter table testsummary
-    add column testsummary_id integer;
+    add column summary_id integer;
 
 update testsummary as ts
-set testsummary_id = ts2t.id
+set summary_id = ts2t.id
 from testsummary2test as ts2t
 where alias = ts2t.testsummaryalias;
 
 alter table testsummary
-    alter column testsummary_id set not null;
+    alter column summary_id set not null;
 alter table testsummary
-    add constraint testsummary_testsummary2test_fk foreign key (testsummary_id) references testsummary2test (id);
+    add constraint testsummary_testsummary2test_fk foreign key (summary_id) references testsummary2test (id);
 alter table testsummary
     drop column test;
 alter table testsummary

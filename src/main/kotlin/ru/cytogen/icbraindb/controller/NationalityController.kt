@@ -26,7 +26,7 @@ class NationalityController(
         return service.delete(id!!)
     }
 
-    @GetMapping("/available")
+    @GetMapping("/")
     fun getAvailable(): List<NationalityDto> {
         return service.getAllAvailable()
     }

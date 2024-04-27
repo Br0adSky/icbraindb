@@ -27,7 +27,7 @@ class CityController(
         return humanService.deleteCity(id!!)
     }
 
-    @GetMapping("/available")
+    @GetMapping("/")
     fun getAvailable(): List<CityDto> {
         return service.getAllAvailable()
     }
