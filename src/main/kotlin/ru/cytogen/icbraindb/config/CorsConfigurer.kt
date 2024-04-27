@@ -17,7 +17,7 @@ class CorsConfigurer(
     }
 
     fun createSecuredConfiguration() = CorsConfiguration().apply {
-        allowedOrigins = listOf(properties.url)
+        allowedOrigins = properties.urls
         allowedMethods = listOf("GET", "POST", "DELETE")
     }
 

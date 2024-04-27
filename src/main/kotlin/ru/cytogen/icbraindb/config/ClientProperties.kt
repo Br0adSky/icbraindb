@@ -8,6 +8,6 @@ import org.springframework.validation.annotation.Validated
 @ConfigurationProperties("client")
 class ClientProperties(
     @field:NotEmpty
-    val url: String?
+    val urls: List<String>
 ) {
 }
