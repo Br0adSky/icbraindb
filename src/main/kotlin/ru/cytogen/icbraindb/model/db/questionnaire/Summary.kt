@@ -18,7 +18,7 @@ class Summary(
 ) : AbstractIntEntity() {
 
     @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "testsummary", joinColumns = [JoinColumn(name = "testsummary_id")])
+    @CollectionTable(name = "testsummary", joinColumns = [JoinColumn(name = "summary_id")])
     @Column(name = "id")
     val questionnaires: Set<Int> = setOf()
 }

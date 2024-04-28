@@ -12,7 +12,7 @@ class QuestionnaireToSave(
     val human: String,
     @Column(name = "value", nullable = false)
     val value: Double,
-    @Column(name = "testsummary_id", nullable = false)
+    @Column(name = "summary_id", nullable = false)
     val summary: Int
 ) : AbstractIntEntity() {
 }

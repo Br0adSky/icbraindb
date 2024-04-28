@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Positive
 import ru.cytogen.icbraindb.config.validation.CyrillicOrLatin
 import ru.cytogen.icbraindb.config.validation.nationality.NationalityToSearchValidation
 
-class HumanDto(
+data class HumanDto(
     @JsonProperty
     @field:NotBlank
     val id: String?,

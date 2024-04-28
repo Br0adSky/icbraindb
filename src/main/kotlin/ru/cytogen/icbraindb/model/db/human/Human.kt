@@ -14,7 +14,7 @@ class Human(
     val comments: String?,
     @Column(name = ("ethnos"))
     val ethnos: String?,
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city")
     val city: City?,
     @Column(name = "is_male")

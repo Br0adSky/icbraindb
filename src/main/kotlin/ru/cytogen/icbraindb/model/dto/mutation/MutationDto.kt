@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Positive
 import ru.cytogen.icbraindb.config.validation.mutation.Nucleotide
 import ru.cytogen.icbraindb.model.db.mutation.MutationType
 
-class MutationDto(
+data class MutationDto(
     @JsonProperty
     @field:Positive
     val id: Int?,

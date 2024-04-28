@@ -11,7 +11,7 @@ class Questionnaire(
     @Column(name = "value", nullable = false)
     var value: Double,
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "testsummary_id", nullable = false)
+    @JoinColumn(name = "summary_id", nullable = false)
     val summary: Summary
 ) : AbstractIntEntity() {
 }
