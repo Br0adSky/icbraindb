@@ -26,7 +26,7 @@ class SecurityConfiguration {
             it.requestMatchers("v3/api-docs/**").permitAll()
         }.csrf {
             it.csrfTokenRepository(CookieCsrfTokenRepository())
-            it.ignoringRequestMatchers("api/*/metadata", "api/*/{id}", "api/*/")
+            it.ignoringRequestMatchers("api/*/")
         }
         return http.build()
     }
