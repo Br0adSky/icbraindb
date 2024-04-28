@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Positive
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import ru.cytogen.icbraindb.config.validation.EditAbstractIdValidation
+import ru.cytogen.icbraindb.config.validation.city.CityToSaveValidation
 import ru.cytogen.icbraindb.model.dto.human.CityDto
 import ru.cytogen.icbraindb.service.human.CityService
 import ru.cytogen.icbraindb.service.human.HumanService
@@ -37,6 +38,7 @@ class CityController(
         @RequestBody
         @Valid
         @EditAbstractIdValidation
+        @CityToSaveValidation
         request: CityDto
     ) {
         service.saveEdited(request)

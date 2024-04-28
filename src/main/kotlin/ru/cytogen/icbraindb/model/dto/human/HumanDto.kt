@@ -5,6 +5,7 @@ import jakarta.validation.Valid
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Positive
 import ru.cytogen.icbraindb.config.validation.CyrillicOrLatin
+import ru.cytogen.icbraindb.config.validation.city.CityToSearchValidation
 import ru.cytogen.icbraindb.config.validation.nationality.NationalityToSearchValidation
 
 data class HumanDto(
@@ -23,6 +24,7 @@ data class HumanDto(
     @field:Valid
     val nationalities: List<@NationalityToSearchValidation NationalityDto>,
     @JsonProperty
+    @field:CityToSearchValidation
     @field:Valid
     val city: CityDto?,
     @JsonProperty

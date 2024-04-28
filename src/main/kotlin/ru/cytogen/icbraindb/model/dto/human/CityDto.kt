@@ -1,7 +1,6 @@
 package ru.cytogen.icbraindb.model.dto.human
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Positive
 import ru.cytogen.icbraindb.config.validation.Country
 import ru.cytogen.icbraindb.config.validation.Cyrillic
@@ -19,7 +18,6 @@ data class CityDto(
     @field:District
     val district: String?,
     @JsonProperty
-    @field:NotBlank
     @field:Country
     val country: String?
 ): AbstractIdDto<Long> {
