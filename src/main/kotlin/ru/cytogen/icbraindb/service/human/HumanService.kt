@@ -3,7 +3,6 @@ package ru.cytogen.icbraindb.service.human
 import mu.KLogging
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Transactional
 import ru.cytogen.icbraindb.dto.request.HumanRequest
 import ru.cytogen.icbraindb.dto.response.Response
@@ -78,7 +77,7 @@ class HumanService(
         logger.info { "Человек с id: ${request.id} обновлен: $request" }
     }
 
-    @Transactional(isolation = Isolation.SERIALIZABLE)
+    @Transactional
     fun saveNew(request: HumanDto) {
         if (toSaveRepo.existsById(request.id!!)) {
             throw HumanExistsException(request.id)

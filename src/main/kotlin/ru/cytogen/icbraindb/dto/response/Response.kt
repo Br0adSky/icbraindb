@@ -16,7 +16,7 @@ class Response(
             return Response(
                 data.asSequence().map(convert).toList(),
                 request.filter,
-                PageResponseDto(data.pageable.pageNumber, data.pageable.pageSize, data.totalPages),
+                PageResponseDto(data.pageable.pageNumber, data.pageable.pageSize, data.totalPages, data.totalElements),
                 request.sort
             )
         }

@@ -3,7 +3,6 @@ package ru.cytogen.icbraindb.service.mutation
 import mu.KLogging
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Transactional
 import ru.cytogen.icbraindb.dto.request.MutationRequest
 import ru.cytogen.icbraindb.dto.response.Response
@@ -25,6 +24,7 @@ class MutationService(
     private val snpService: SnpService
 ) {
     companion object : KLogging()
+
     @Transactional
     fun getById(id: Int): MutationDto {
         return repo.findById(id).map { MutationConverter.convert(it) }.orElseThrow { MutationNotFound(id) }
@@ -60,9 +60,7 @@ class MutationService(
             .orElseThrow { MutationNotFound(request.id) }
     }
 
-    //необходимо выполнять запросы последовательно, так как в рамках транзакции могут
-    //добавиться новые записи, которые необходимо учитывать в сл. вызове
-    @Transactional(isolation = Isolation.SERIALIZABLE)
+    @Transactional
     fun saveNew(request: MutationDto) {
         humanService.verifyHumanExists(request.human!!)
         val snp = snpService.findSnpIdOrCreate(request.snp!!)

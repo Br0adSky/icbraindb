@@ -2,7 +2,6 @@ package ru.cytogen.icbraindb.service.test
 
 import mu.KLogging
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Transactional
 import ru.cytogen.icbraindb.exception.TestNotFoundException
 import ru.cytogen.icbraindb.model.dto.questionnaire.test.DetailedTestDto
@@ -29,7 +28,7 @@ class TestService(
             }.orElseThrow { TestNotFoundException(request) }
     }
 
-    @Transactional(isolation = Isolation.SERIALIZABLE)
+    @Transactional
     fun saveNew(request: DetailedTestToSave) {
         val test = TestConverter.convertTest(request.test!!)
         test.summaries = request.summaries!!.asSequence().map { summaryService.saveSummary(test, it) }.toSet()

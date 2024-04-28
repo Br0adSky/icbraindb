@@ -3,7 +3,6 @@ package ru.cytogen.icbraindb.service.questionnaire
 import mu.KLogging
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Transactional
 import ru.cytogen.icbraindb.dto.request.QuestionnaireRequest
 import ru.cytogen.icbraindb.dto.response.Response
@@ -28,7 +27,7 @@ class QuestionnaireService(
 ) {
     companion object : KLogging()
 
-    @Transactional(isolation = Isolation.SERIALIZABLE)
+    @Transactional
     fun saveNew(request: QuestionnaireToSave) {
         humanService.verifyHumanExists(request.human!!)
 

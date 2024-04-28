@@ -11,6 +11,7 @@ import ru.cytogen.icbraindb.dto.response.MetadataResponse
 import ru.cytogen.icbraindb.dto.response.Response
 import ru.cytogen.icbraindb.model.dto.human.HumanDto
 import ru.cytogen.icbraindb.service.human.HumanService
+import java.util.concurrent.Executors
 
 @Validated
 @RestController
@@ -19,6 +20,7 @@ class HumanController(
     private val service: HumanService
 ) {
     private val preparedMetadataResponse = MetadataResponse(parsedHumanFilter, parsedHumanSort)
+    private val executor = Executors.newSingleThreadExecutor()
 
     @DeleteMapping("/delete/{id}")
     fun deleteHuman(@PathVariable @NotBlank id: String?) {
@@ -52,6 +54,6 @@ class HumanController(
 
     @PostMapping("/save")
     fun saveNew(@RequestBody @Valid request: HumanDto) {
-        service.saveNew(request)
+        executor.submit { service.saveNew(request) }.get()
     }
 }

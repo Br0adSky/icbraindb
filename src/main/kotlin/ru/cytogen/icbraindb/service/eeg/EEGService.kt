@@ -3,7 +3,6 @@ package ru.cytogen.icbraindb.service.eeg
 import mu.KLogging
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Transactional
 import ru.cytogen.icbraindb.dto.request.EEGRequest
 import ru.cytogen.icbraindb.dto.response.Response
@@ -45,7 +44,7 @@ class EEGService(
             .orElseThrow { EEGNotFound(request) }
     }
 
-    @Transactional(isolation = Isolation.SERIALIZABLE)
+    @Transactional
     fun saveNew(request: EEGDto) {
         request.human?.let { humanService.verifyHumanExists(it) }
 
