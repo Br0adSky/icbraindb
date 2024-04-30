@@ -8,7 +8,7 @@ import ru.cytogen.icbraindb.model.db.human.Human_
 
 enum class EEGSortColumn(private val sort: Sort.Order) : SortColumn {
     @JsonProperty("human")
-    TYPE(Sort.Order.by("${EEGFile_.HUMAN}.${Human_.ID}")),
+    TYPE(Sort.Order.by(EEGFile_.HUMAN)),
 
     @JsonProperty("description")
     REF_NUCL(Sort.Order.by(EEGFile_.DESCRIPTION)),
