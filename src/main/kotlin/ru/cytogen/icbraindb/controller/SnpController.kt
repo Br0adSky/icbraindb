@@ -11,7 +11,7 @@ import ru.cytogen.icbraindb.service.mutation.SnpService
 
 @Validated
 @RestController
-@RequestMapping("api/snp")
+@RequestMapping("/api/snp")
 class SnpController(
     private val service: SnpService
 ) {

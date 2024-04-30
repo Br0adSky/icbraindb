@@ -11,7 +11,7 @@ class Gene(
     @Column(name = "gene_name", nullable = false)
     var geneName: String
 ) : AbstractLongEntity() {
-    //компромисс, почему-то если делать как везде через @ElementCollection, то возникает какая-то ошибка в human-mutations
+    //TODO: компромисс, почему-то если делать как везде через @ElementCollection, то возникает какая-то ошибка в human-mutations
     @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.REMOVE], mappedBy = "gene")
     val snps: MutableSet<SnpToDelete> = mutableSetOf()
 }
