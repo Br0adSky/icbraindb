@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/icbrain?currentSchema=brain
+    username: savobraindb_admin
+    password: savobraindb_admin
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8080/realms/icbraindb/protocol/openid-connect/certs
+server:
+  port: 8000
+
+client:
+  urls:
+    - http://localhost:7200
