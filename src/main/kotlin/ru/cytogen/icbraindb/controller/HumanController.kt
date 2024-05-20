@@ -10,6 +10,7 @@ import ru.cytogen.icbraindb.dto.request.parsedHumanSort
 import ru.cytogen.icbraindb.dto.response.MetadataResponse
 import ru.cytogen.icbraindb.dto.response.Response
 import ru.cytogen.icbraindb.model.dto.human.HumanDto
+import ru.cytogen.icbraindb.service.LocaleTypes
 import ru.cytogen.icbraindb.service.human.HumanService
 import java.util.concurrent.Executors
 
@@ -38,8 +39,13 @@ class HumanController(
     }
 
     @PostMapping("/")
-    fun getHumans(@RequestBody @Valid request: HumanRequest): Response {
-        return service.getAll(request)
+    fun getHumans(
+        @RequestBody
+        @Valid request: HumanRequest,
+        @RequestParam(required = false)
+        locale: LocaleTypes = LocaleTypes.RU
+    ): Response {
+        return service.getAll(request, locale)
     }
 
     @GetMapping("/metadata")

@@ -14,6 +14,7 @@ import ru.cytogen.icbraindb.model.dto.human.HumanDto
 import ru.cytogen.icbraindb.repository.HumanDeleteRepository
 import ru.cytogen.icbraindb.repository.HumanRepository
 import ru.cytogen.icbraindb.repository.HumanWriteRepository
+import ru.cytogen.icbraindb.service.LocaleTypes
 import ru.cytogen.icbraindb.service.utils.PageConverter
 
 @Service
@@ -33,16 +34,16 @@ class HumanService(
     }
 
     @Transactional
-    fun getAll(request: HumanRequest): Response {
+    fun getAll(request: HumanRequest, locale: LocaleTypes): Response {
         val pagination = PageConverter.of(request)
         val data = request.filter?.let {
-            repo.findAll(getSpecification(it), pagination)
+            repo.findAll(getSpecification(it, locale), pagination)
         } ?: repo.findAll(pagination)
 
         return Response.from(request, data, HumanConverter::convert)
     }
 
-    private fun getSpecification(filter: HumanFilter): Specification<Human> {
+    private fun getSpecification(filter: HumanFilter, locale: LocaleTypes): Specification<Human> {
         return Specification.where(filter.age?.let(HumanSpecification::age))
             .and(filter.district?.let(HumanSpecification::district))
             .and(filter.city?.let(HumanSpecification::city))
@@ -54,7 +55,9 @@ class HumanService(
             .and(filter.hasEEGFiles?.let(HumanSpecification::hasEEGFiles))
             .and(filter.sex?.let(HumanSpecification::sex))
             .and(filter.migrant?.let(HumanSpecification::isMigrant))
-            .and(filter.nationalities?.takeIf { it.value.isNotEmpty() }?.let(HumanSpecification::nationalities))
+            .and(filter.nationalities?.takeIf { it.value.isNotEmpty() }?.let {
+                HumanSpecification.nationalities(it, locale)
+            })
             .and(filter.diseases?.takeIf { it.value.isNotEmpty() }?.let(HumanSpecification::diseases))
     }
 

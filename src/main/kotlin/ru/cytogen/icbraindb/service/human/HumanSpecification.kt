@@ -15,6 +15,7 @@ import ru.cytogen.icbraindb.model.db.mutation.HumanMutation_
 import ru.cytogen.icbraindb.model.db.questionnaire.Questionnaire
 import ru.cytogen.icbraindb.model.db.questionnaire.Questionnaire_
 import ru.cytogen.icbraindb.service.CommonSpecification
+import ru.cytogen.icbraindb.service.LocaleTypes
 
 object HumanSpecification {
     fun deleteCity(cityId: Long): (CriteriaBuilder) -> CriteriaUpdate<Human> = {
@@ -96,12 +97,17 @@ object HumanSpecification {
         builder.isExistsFilter(predicate, hasSummaries)
     }
 
-    fun nationalities(exactNationalities: ListOfExactFilters): Specification<Human> =
-        humanListOfExactFilters(
+    fun nationalities(exactNationalities: ListOfExactFilters, locale: LocaleTypes): Specification<Human> {
+        val attribute = when(locale) {
+            LocaleTypes.RU -> Nationality_.nationality
+            LocaleTypes.EN -> Nationality_.nationalityEN
+        }
+        return humanListOfExactFilters(
             exactNationalities,
-            Nationality_.nationality,
+            attribute,
             Human_.nationalities
         )
+    }
 
     fun diseases(exactDiseases: ListOfExactFilters): Specification<Human> =
         humanListOfExactFilters(exactDiseases, Disease_.disease, Human_.diseases)

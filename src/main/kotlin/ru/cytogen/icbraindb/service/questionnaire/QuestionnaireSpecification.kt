@@ -9,6 +9,7 @@ import ru.cytogen.icbraindb.model.db.questionnaire.Questionnaire_
 import ru.cytogen.icbraindb.model.db.questionnaire.Summary_
 import ru.cytogen.icbraindb.model.db.questionnaire.Test_
 import ru.cytogen.icbraindb.service.CommonSpecification
+import ru.cytogen.icbraindb.service.LocaleTypes
 
 object QuestionnaireSpecification {
     fun human(humans: ListOfExactFilters): Specification<Questionnaire> = Specification { root, _, builder ->
@@ -17,12 +18,16 @@ object QuestionnaireSpecification {
         inPredicate
     }
 
-    fun testName(testName: StringFilter): Specification<Questionnaire> = Specification { root, _, builder ->
+    fun testName(testName: StringFilter, locale: LocaleTypes): Specification<Questionnaire> = Specification { root, _, builder ->
+        val attribute = when(locale) {
+            LocaleTypes.EN -> Test_.nameEN
+            LocaleTypes.RU -> Test_.name
+        }
         CommonSpecification.likeOrEqual(
             builder,
             root.join(Questionnaire_.summary)
                 .join(Summary_.test)
-                .get(Test_.name),
+                .get(attribute),
             testName
         )
     }

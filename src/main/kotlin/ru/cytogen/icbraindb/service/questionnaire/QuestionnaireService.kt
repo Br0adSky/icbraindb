@@ -14,6 +14,7 @@ import ru.cytogen.icbraindb.model.dto.questionnaire.QuestionnaireToEdit
 import ru.cytogen.icbraindb.model.dto.questionnaire.QuestionnaireToSave
 import ru.cytogen.icbraindb.repository.QuestionnaireRepository
 import ru.cytogen.icbraindb.repository.QuestionnaireToSaveRepository
+import ru.cytogen.icbraindb.service.LocaleTypes
 import ru.cytogen.icbraindb.service.human.HumanService
 import ru.cytogen.icbraindb.service.test.SummaryService
 import ru.cytogen.icbraindb.service.utils.PageConverter
@@ -49,18 +50,20 @@ class QuestionnaireService(
     }
 
     @Transactional
-    fun getAll(request: QuestionnaireRequest): Response {
+    fun getAll(request: QuestionnaireRequest, locale: LocaleTypes): Response {
         val pagination = PageConverter.of(request)
         val data = request.filter?.let {
-            repo.findAll(getSpecification(it), pagination)
+            repo.findAll(getSpecification(it, locale), pagination)
         } ?: repo.findAll(pagination)
 
         return Response.from(request, data, QuestionnaireConvert::convert)
     }
 
-    private fun getSpecification(filter: QuestionnaireFilter): Specification<Questionnaire> {
+    private fun getSpecification(filter: QuestionnaireFilter, locale: LocaleTypes): Specification<Questionnaire> {
         return Specification.where(filter.humans?.let(QuestionnaireSpecification::human))
-            .and(filter.testName?.let(QuestionnaireSpecification::testName))
+            .and(filter.testName?.let {
+                QuestionnaireSpecification.testName(it, locale)
+            })
             .and(filter.value?.let(QuestionnaireSpecification::value))
             .and(filter.testSummaryAlias?.let(QuestionnaireSpecification::testSummaryAlias))
     }

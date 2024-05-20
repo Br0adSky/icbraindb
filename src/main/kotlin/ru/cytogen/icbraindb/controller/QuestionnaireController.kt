@@ -12,6 +12,7 @@ import ru.cytogen.icbraindb.dto.response.Response
 import ru.cytogen.icbraindb.model.dto.questionnaire.QuestionnaireDto
 import ru.cytogen.icbraindb.model.dto.questionnaire.QuestionnaireToEdit
 import ru.cytogen.icbraindb.model.dto.questionnaire.QuestionnaireToSave
+import ru.cytogen.icbraindb.service.LocaleTypes
 import ru.cytogen.icbraindb.service.questionnaire.QuestionnaireService
 
 @RestController
@@ -37,8 +38,13 @@ class QuestionnaireController(
     }
 
     @PostMapping("/")
-    fun getMutations(@RequestBody @Valid request: QuestionnaireRequest): Response {
-        return service.getAll(request)
+    fun getMutations(
+        @RequestBody
+        @Valid request: QuestionnaireRequest,
+        @RequestParam(required = false)
+        locale: LocaleTypes = LocaleTypes.RU
+    ): Response {
+        return service.getAll(request, locale)
     }
 
     @PostMapping("/save")
