@@ -7,9 +7,9 @@ create table genes
 );
 
 -- ВНИМАНИЕ! для данной мутации обнаружено неверное значение -- должно быть LILRA6, а указано в базе GRIN2A
-update mutation
-set gene = 'LILRA6'
-where id = 733884;
+-- update mutation
+-- set gene = 'LILRA6'
+-- where id = 733884;
 
 insert into genes(chromosome, gene_name)
 select distinct m.chromosome, m.gene
