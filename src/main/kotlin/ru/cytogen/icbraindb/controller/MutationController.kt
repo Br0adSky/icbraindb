@@ -13,7 +13,6 @@ import ru.cytogen.icbraindb.dto.response.Response
 import ru.cytogen.icbraindb.model.dto.mutation.MutationDto
 import ru.cytogen.icbraindb.model.dto.mutation.MutationToEdit
 import ru.cytogen.icbraindb.service.mutation.MutationService
-import java.util.concurrent.Executors
 
 @Validated
 @RestController
@@ -22,7 +21,6 @@ class MutationController(
     private val service: MutationService,
 ) {
     private val preparedMetadataResponse = MetadataResponse(parsedMutationFilter, parsedMutationSort)
-    private val executor = Executors.newSingleThreadExecutor()
 
     @GetMapping("/{id}")
     fun getById(@PathVariable @NotNull @Positive id: Int?): MutationDto {
@@ -54,6 +52,6 @@ class MutationController(
 
     @PostMapping("/save")
     fun saveNew(@RequestBody @Valid request: MutationDto) {
-        executor.submit { service.saveNew(request) }.get()
+        service.saveNew(request)
     }
 }

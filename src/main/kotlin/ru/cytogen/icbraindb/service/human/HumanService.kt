@@ -26,6 +26,8 @@ class HumanService(
     private val cityService: CityService,
     private val deleteRepo: HumanDeleteRepository
 ) {
+    private val monitor = Any()
+
     companion object : KLogging()
 
     @Transactional
@@ -80,16 +82,20 @@ class HumanService(
         logger.info { "Человек с id: ${request.id} обновлен: $request" }
     }
 
-    @Transactional
     fun saveNew(request: HumanDto) {
         if (toSaveRepo.existsById(request.id!!)) {
             throw HumanExistsException(request.id)
         }
+        val nationIds: Set<Long>
+        val diseases: Set<Long>
+        val city: Long?
+        synchronized(monitor) {
+            nationIds = nationalityService.getExistentNationalityIdsOrCreate(request.nationalities)
+            diseases = diseaseService.getExistentOrCreate(request.diseases)
+            city = request.city?.let(cityService::getExistentCityIdOrCreate)
+        }
 
-        val nationIds = nationalityService.getExistentNationalityIdsOrCreate(request.nationalities)
-        val diseases = diseaseService.getExistentOrCreate(request.diseases)
-        val city = request.city?.let(cityService::getExistentCityIdOrCreate)
-        toSaveRepo.persist(HumanConverter.convert(request, city, nationIds, diseases))
+        toSaveRepo.save(HumanConverter.convert(request, city, nationIds, diseases))
         logger.info { "Сохранен новый человек: $request" }
     }
 

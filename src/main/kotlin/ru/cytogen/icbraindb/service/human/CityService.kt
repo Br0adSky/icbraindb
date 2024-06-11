@@ -23,6 +23,7 @@ class CityService(
         return getCity(city).orElseThrow { CityNotFound(city) }
     }
 
+    @Transactional
     fun getExistentCityIdOrCreate(city: CityDto): Long {
         return getCity(city).orElseGet { createCity(city) }
     }

@@ -47,6 +47,7 @@ class NationalityService(
         return nationalities.asSequence().map(::getExistentNationalityIdOrThrow).toSet()
     }
 
+    @Transactional
     fun getExistentNationalityIdsOrCreate(nationalities: List<NationalityDto>): Set<Long> {
         return nationalities.asSequence().map(::getExistentNationalityIdOrCreate).toSet()
     }

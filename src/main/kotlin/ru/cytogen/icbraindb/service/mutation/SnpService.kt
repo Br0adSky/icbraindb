@@ -33,6 +33,7 @@ class SnpService(
             .orElseThrow { SnpNotFound(snp) }
     }
 
+    @Transactional
     fun findSnpIdOrCreate(snp: SnpDto): Long {
         return findSnpId(snp).orElseGet {
             createNew(snp)

@@ -9,6 +9,6 @@ object NationalityConverter {
     }
 
     fun convertNationality(from: NationalityDto): Nationality {
-        return Nationality(from.nationality!!, from.nationalityEn!!)
+        return Nationality(from.nationality, from.nationalityEn)
     }
 }

@@ -23,6 +23,8 @@ class MutationService(
     private val repoToSave: MutationToSaveRepository,
     private val snpService: SnpService
 ) {
+    private val monitor = Any()
+
     companion object : KLogging()
 
     @Transactional
@@ -60,12 +62,14 @@ class MutationService(
             .orElseThrow { MutationNotFound(request.id) }
     }
 
-    @Transactional
     fun saveNew(request: MutationDto) {
         humanService.verifyHumanExists(request.human!!)
-        val snp = snpService.findSnpIdOrCreate(request.snp!!)
+        val snp: Long
+        synchronized(monitor) {
+            snp = snpService.findSnpIdOrCreate(request.snp!!)
+        }
 
-        repoToSave.persist(MutationConverter.convert(request, snp))
+        repoToSave.save(MutationConverter.convert(request, snp))
         logger.info { "Сохранена новая мутация: $request" }
     }
 

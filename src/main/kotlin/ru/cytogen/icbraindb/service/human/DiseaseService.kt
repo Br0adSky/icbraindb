@@ -19,6 +19,7 @@ class DiseaseService(
         return repo.findAll().map(HumanConverter::convertDisease)
     }
 
+    @Transactional
     fun getExistentOrCreate(disease: List<DiseaseDto>): Set<Long> {
         return disease.asSequence().map(::getExistentDiseaseIdOrCreate).toSet()
     }
